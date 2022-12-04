@@ -81,7 +81,7 @@ const charMap: Record<string, number> = {
 
 export const partOne = (input: string) =>
   input
-    ?.split("\n")
+    .split("\n")
     .map(
       (line) =>
         charMap[
@@ -91,6 +91,6 @@ export const partOne = (input: string) =>
     .reduce((acc, curr) => acc + curr, 0);
 
 export const partTwo = (input: string) =>
-  chunk(input?.split("\n"), 3)
+  chunk(input.split("\n"), 3)
     .map(([a, b, c]) => charMap[intersection(a, b, c)])
     .reduce((acc, curr) => acc + curr, 0);

@@ -9,20 +9,22 @@ export const getInput = async (day: number) => {
   } catch {}
 
   try {
-    const response = await fetch(
-      `https://adventofcode.com/2022/day/${day}/input`,
-      {
-        headers: {
-          cookie:
-            "session=53616c7465645f5f45882496767ae8b886bf6f95f090c903935c5f62495ad9da5ce426e5f4b265a0d0601dde50d2ce81e7168d95d4f01b9d7dadcb8bd4403e87",
-        },
-      }
-    );
+    const url = `https://adventofcode.com/2022/day/${day}/input`;
+    console.error(`fetching input from ${url} ...`);
+    const response = await fetch(url, {
+      headers: {
+        cookie:
+          "session=53616c7465645f5f45882496767ae8b886bf6f95f090c903935c5f62495ad9da5ce426e5f4b265a0d0601dde50d2ce81e7168d95d4f01b9d7dadcb8bd4403e87",
+      },
+    });
+    if (!response.ok) {
+      throw new Error("Puzzle not ready yet");
+    }
     const input = (await response.text()).trimEnd();
 
     await Bun.write(filePath, JSON.stringify({ input }));
     return input;
   } catch (e) {
-    return null;
+    throw e;
   }
 };

@@ -13,6 +13,6 @@ try {
 
   console.log(`Part one: ${partOne?.(input)}`);
   console.log(`Part two: ${partTwo?.(input)}`);
-} catch {
-  console.log("not implemented");
+} catch (e) {
+  console.error((e as any).message);
 }

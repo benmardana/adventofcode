@@ -1,6 +1,6 @@
 export const partOne = (input: string) =>
   input
-    ?.split("\n\n")
+    .split("\n\n")
     .map((group) =>
       group.split("\n").reduce((acc, curr) => acc + Number(curr), 0)
     )
@@ -8,7 +8,7 @@ export const partOne = (input: string) =>
 
 export const partTwo = (input: string) => {
   const parsedInput = input
-    ?.split("\n\n")
+    .split("\n\n")
     .map((group) =>
       group.split("\n").reduce((acc, curr) => acc + Number(curr), 0)
     )

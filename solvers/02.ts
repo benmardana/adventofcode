@@ -64,13 +64,13 @@ const resultMap: Record<string, (opponent: string) => number> = {
 
 export const partOne = (input: string) =>
   input
-    ?.split("\n")
+    .split("\n")
     .map((line) => scoreMap[line.replace(" ", "")])
     .reduce((acc, curr) => acc + curr, 0);
 
 export const partTwo = (input: string) =>
   input
-    ?.split("\n")
+    .split("\n")
     .map((line) => {
       const [opponent, result] = line.split(" ");
       return resultMap[result](opponent);
