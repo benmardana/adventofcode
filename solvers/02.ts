@@ -62,29 +62,17 @@ const resultMap: Record<string, (opponent: string) => number> = {
   },
 };
 
-const solver = (input: string) => {
-  partOne(input);
-  partTwo(input);
-};
-
-function partOne(input: string) {
-  const result = input
+export const partOne = (input: string) =>
+  input
     ?.split("\n")
     .map((line) => scoreMap[line.replace(" ", "")])
     .reduce((acc, curr) => acc + curr, 0);
-  console.log(`Part one: ${result}`);
-}
 
-function partTwo(input: string) {
-  const result = input
+export const partTwo = (input: string) =>
+  input
     ?.split("\n")
     .map((line) => {
       const [opponent, result] = line.split(" ");
       return resultMap[result](opponent);
     })
     .reduce((acc, curr) => acc + curr, 0);
-
-  console.log(`Part two: ${result}`);
-}
-
-export default solver;

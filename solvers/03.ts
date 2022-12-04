@@ -24,27 +24,6 @@ const chunk = (arr: string[], len: number) => {
   return chunks;
 };
 
-const solver = (input: string) => {
-  const partOne = input
-    ?.split("\n")
-    .map(
-      (line) =>
-        charMap[
-          intersection(line.slice(0, line.length), line.slice(line.length / 2))
-        ]
-    )
-    .reduce((acc, curr) => acc + curr, 0);
-
-  console.log(`Part one: ${partOne}`);
-
-  const partTwo = chunk(input?.split("\n"), 3)
-    .map(([a, b, c]) => charMap[intersection(a, b, c)])
-    .reduce((acc, curr) => acc + curr, 0);
-  console.log(`Part two: ${partTwo}`);
-};
-
-export default solver;
-
 const charMap: Record<string, number> = {
   a: 1,
   b: 2,
@@ -99,3 +78,19 @@ const charMap: Record<string, number> = {
   Y: 51,
   Z: 52,
 };
+
+export const partOne = (input: string) =>
+  input
+    ?.split("\n")
+    .map(
+      (line) =>
+        charMap[
+          intersection(line.slice(0, line.length), line.slice(line.length / 2))
+        ]
+    )
+    .reduce((acc, curr) => acc + curr, 0);
+
+export const partTwo = (input: string) =>
+  chunk(input?.split("\n"), 3)
+    .map(([a, b, c]) => charMap[intersection(a, b, c)])
+    .reduce((acc, curr) => acc + curr, 0);
