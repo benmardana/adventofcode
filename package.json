@@ -1,0 +1,11 @@
+{
+  "name": "adventofcode",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "go": "bun run index.ts"
+  },
+  "devDependencies": {
+    "bun-types": "^0.2.2"
+  }
+}
