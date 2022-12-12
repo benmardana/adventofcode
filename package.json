@@ -4,9 +4,11 @@
   "type": "module",
   "scripts": {
     "go": "bun run index.ts",
+    "test": "vitest",
     "new-solver": "func() { cp solvers/template.ts solvers/$1.ts; }; func"
   },
   "devDependencies": {
-    "bun-types": "^0.2.2"
+    "bun-types": "^0.2.2",
+    "vitest": "^0.25.7"
   }
 }

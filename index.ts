@@ -8,7 +8,7 @@ try {
   const input = await getInput(day);
 
   const { partOne, partTwo } = await import(
-    `${import.meta.dir}/solvers/${day.toString().padStart(2, "0")}.ts`
+    `${import.meta.dir}/solvers/${day.toString().padStart(2, "0")}`
   );
 
   console.log(`Part one: ${partOne?.(input)}`);
