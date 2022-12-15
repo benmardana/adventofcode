@@ -1,2 +1,6 @@
-export const partOne = (input: string) => input.split("\n");
-export const partTwo = (input: string) => input.split("\n");
+export const partOne = (input: string) => {
+  return input;
+};
+export const partTwo = (input: string) => {
+  return input;
+};

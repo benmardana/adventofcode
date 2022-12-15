@@ -47,7 +47,6 @@ describe("set", () => {
   it("should set deeply nested", () => {
     const obj = { name: "/", files: [], directories: [] };
     set(obj, "foo\\bar\\baz\\quu\\qux", 100);
-    console.log(JSON.stringify(obj));
     expect(obj).toEqual({
       name: "/",
       files: [],
