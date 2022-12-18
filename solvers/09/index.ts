@@ -13,6 +13,7 @@ interface Rope {
   head: Coordinate[];
   tail: Coordinate;
 }
+
 const move = (
   [x, y]: Coordinate,
   direction: string,
@@ -68,12 +69,18 @@ R 17
 D 10
 L 25
 U 20`;
+
+interface LongRope {
+  head: Coordinate[];
+  tail: Coordinate[][];
+}
+
 export const partTwo = (input: string) => {
   const visitedTailPositions: Record<string, number> = {};
 
-  const rope: Rope = {
+  const rope: LongRope = {
     head: [[0, 0]],
-    tail: [0, 0],
+    tail: Array.from({ length: 9 }, () => [[0, 0]]),
   };
 
   const visitPosition = (coordinate: Coordinate) => {
@@ -83,15 +90,24 @@ export const partTwo = (input: string) => {
       : 1;
   };
 
-  example2.split("\n").forEach((line) => {
+  input.split("\n").forEach((line) => {
     const [direction, magnitude] = line.split(" ");
-    for (let index = 0; index < Number(magnitude); index++) {
-      visitPosition(rope.tail);
+    for (let i = 0; i < Number(magnitude); i++) {
       rope.head.unshift(move(rope.head[0], direction, 1));
-      console.log(rope.head);
-      if (rope.head[8] && !adjacent(rope.head[8], rope.tail)) {
-        rope.tail = rope.head[9];
-      }
+      let parent = [...rope.head] as Coordinate[];
+
+      rope.tail.forEach((tail) => {
+        if (!adjacent(parent[0], tail[0])) {
+          if (Math.abs(parent[0][0] - tail[0][0]) > 0) {
+            tail[0][0] += Math.sign(parent[0][0] - tail[0][0]);
+          }
+          if (Math.abs(parent[0][1] - tail[0][1]) > 0) {
+            tail[0][1] += Math.sign(parent[0][1] - tail[0][1]);
+          }
+        }
+        parent = [...tail];
+      });
+      visitPosition(rope.tail.at(-1)![0]);
     }
   });
   return Object.keys(visitedTailPositions).length;
