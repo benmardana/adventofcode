@@ -1,0 +1,4 @@
+{
+  "name": "bun.sh",
+  "image": "https://hub.docker.com/r/dvlprtech/bun:latest"
+}
