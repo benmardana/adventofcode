@@ -1,5 +1,6 @@
 pub fn solve(input: String) -> Option<(i32, i32)> {
     let mut tmp: Vec<i32> = input
+        .trim_end()
         .split("\n\n")
         .map(|group| {
             group

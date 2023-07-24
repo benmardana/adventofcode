@@ -1,11 +1,11 @@
 use std::{
     fs::{read_to_string, File},
-    io::Write,
+    io::Write, fmt::Debug,
 };
 
 use anyhow::Result;
 use args::parse_args;
-use solutions::{day_one, day_two, day_three, day_four};
+use solutions::{day_one, day_two, day_three, day_four, day_five};
 
 
 mod args;
@@ -16,18 +16,20 @@ fn main() -> Result<()> {
 
     let input = get_input(day)?.trim().to_string();
 
-    let solution = match day {
-        1 => day_one::solve(input),
-        2 => day_two::solve(input),
-        3 => day_three::solve(input),
-        4 => day_four::solve(input),
-        _ => None,
+    let solution: Box<dyn Debug> = match day {
+        1 => Box::new(day_one::solve(input)),
+        2 => Box::new(day_two::solve(input)),
+        3 => Box::new(day_three::solve(input)),
+        4 => Box::new(day_four::solve(input)),
+        5 => Box::new(day_five::solve(input)),
+        _ => Box::new(()),
     };
 
     println!("{:?}", solution);
 
     Ok(())
 }
+
 
 
 fn get_input(day: u8) -> Result<String> {
