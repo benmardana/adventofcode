@@ -1,4 +1,4 @@
 {
-  "name": "bun.sh",
-  "image": "dvlprtech/bun:latest"
+  "name": "rust",
+  "image": "mcr.microsoft.com/devcontainers/rust:latest"
 }
