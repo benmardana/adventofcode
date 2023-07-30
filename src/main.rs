@@ -5,7 +5,7 @@ use std::{
 
 use anyhow::Result;
 use args::parse_args;
-use solutions::{day_one, day_two, day_three, day_four, day_five, day_six};
+use solutions::{day_one, day_two, day_three, day_four, day_five, day_six, day_seven};
 
 
 mod args;
@@ -23,6 +23,7 @@ fn main() -> Result<()> {
         4 => Box::new(day_four::solve(input)),
         5 => Box::new(day_five::solve(input)),
         6 => Box::new(day_six::solve(input)),
+        7 => Box::new(day_seven::solve(input)),
         _ => Box::new(()),
     };
 

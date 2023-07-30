@@ -40,7 +40,6 @@ pub fn solve(input: String) -> Option<(String, String)> {
             let from: usize = parts[3].parse().unwrap();
             let to: usize = parts[5].parse().unwrap();
 
-            println!("crate: {:#?}, n: {}", local_crates[from - 1], n);
             let split = local_crates[from - 1].len() - n;
             let mut popped = local_crates[from - 1].split_off(split);
             local_crates[to - 1].append(&mut popped);
