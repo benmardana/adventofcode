@@ -5,7 +5,7 @@ use std::{
 
 use anyhow::Result;
 use args::parse_args;
-use solutions::{day_one, day_two, day_three, day_four, day_five, day_six, day_seven};
+use solutions::{day_one, day_two, day_three, day_four, day_five, day_six, day_seven, day_eight};
 
 
 mod args;
@@ -14,17 +14,25 @@ mod solutions;
 fn main() -> Result<()> {
     let day = parse_args()?.day;
 
-    let input = get_input(day)?.trim().to_string();
-
     let solution: Box<dyn Debug> = match day {
-        1 => Box::new(day_one::solve(input)),
-        2 => Box::new(day_two::solve(input)),
-        3 => Box::new(day_three::solve(input)),
-        4 => Box::new(day_four::solve(input)),
-        5 => Box::new(day_five::solve(input)),
-        6 => Box::new(day_six::solve(input)),
-        7 => Box::new(day_seven::solve(input)),
-        _ => Box::new(()),
+        Some(1) => Box::new(day_one::solve(get_input(1)?.trim().to_string())),
+        Some(2) => Box::new(day_two::solve(get_input(2)?.trim().to_string())),
+        Some(3) => Box::new(day_three::solve(get_input(3)?.trim().to_string())),
+        Some(4) => Box::new(day_four::solve(get_input(4)?.trim().to_string())),
+        Some(5) => Box::new(day_five::solve(get_input(5)?.trim().to_string())),
+        Some(6) => Box::new(day_six::solve(get_input(6)?.trim().to_string())),
+        Some(7) => Box::new(day_seven::solve(get_input(7)?.trim().to_string())),
+        Some(8) => Box::new(day_eight::solve(get_input(8)?.trim().to_string())),
+        _ => {
+            day_one::solve(get_input(1)?.trim().to_string());
+            day_two::solve(get_input(2)?.trim().to_string());
+            day_three::solve(get_input(3)?.trim().to_string());
+            day_four::solve(get_input(4)?.trim().to_string());
+            day_five::solve(get_input(5)?.trim().to_string());
+            day_six::solve(get_input(6)?.trim().to_string());
+            day_seven::solve(get_input(7)?.trim().to_string());
+            Box::new(())
+        },
     };
 
     println!("{:?}", solution);

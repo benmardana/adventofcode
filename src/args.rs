@@ -3,7 +3,7 @@ use lexopt::Arg::{Long, Short, Value};
 use lexopt::{Parser, ValueExt};
 
 pub struct Args {
-    pub day: u8,
+    pub day: Option<u8>,
 }
 
 pub fn parse_args() -> Result<Args> {
@@ -23,5 +23,5 @@ pub fn parse_args() -> Result<Args> {
         }
     }
 
-    Ok(Args { day: day.unwrap() })
+    Ok(Args { day })
 }
