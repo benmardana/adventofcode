@@ -18,7 +18,7 @@ pub fn solve(input: String) -> Option<(i32, i32)> {
     Some((visible_trees.try_into().unwrap(), 0))
 }
 
-fn score(input: &Vec<Vec<u32>>, x: usize, y: usize) -> u8 {
+fn _score(input: &[Vec<u32>], x: usize, y: usize) -> u8 {
     let target_tree: u32 = input[y][x];
     let mut view_length = 0;
     for tree in input[0..y].iter().rev().map(|row| row[x]) {

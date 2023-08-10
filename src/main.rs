@@ -1,11 +1,10 @@
 use std::{
     fs::{read_to_string, File},
-    io::Write, fmt::Debug,
+    io::Write, fmt::Debug, time::Instant,
 };
-
 use anyhow::Result;
 use args::parse_args;
-use solutions::{day_one, day_two, day_three, day_four, day_five, day_six, day_seven, day_eight};
+use solutions::{day_one, day_two, day_three, day_four, day_five, day_six, day_seven, day_eight, day_twelve};
 
 
 mod args;
@@ -13,6 +12,7 @@ mod solutions;
 
 fn main() -> Result<()> {
     let day = parse_args()?.day;
+    let now = Instant::now();
 
     let solution: Box<dyn Debug> = match day {
         Some(1) => Box::new(day_one::solve(get_input(1)?.trim().to_string())),
@@ -23,6 +23,7 @@ fn main() -> Result<()> {
         Some(6) => Box::new(day_six::solve(get_input(6)?.trim().to_string())),
         Some(7) => Box::new(day_seven::solve(get_input(7)?.trim().to_string())),
         Some(8) => Box::new(day_eight::solve(get_input(8)?.trim().to_string())),
+        Some(12) => Box::new(day_twelve::solve(get_input(12)?.trim().to_string())),
         _ => {
             day_one::solve(get_input(1)?.trim().to_string());
             day_two::solve(get_input(2)?.trim().to_string());
@@ -31,11 +32,15 @@ fn main() -> Result<()> {
             day_five::solve(get_input(5)?.trim().to_string());
             day_six::solve(get_input(6)?.trim().to_string());
             day_seven::solve(get_input(7)?.trim().to_string());
+            day_eight::solve(get_input(8)?.trim().to_string());
+            day_twelve::solve(get_input(12)?.trim().to_string());
             Box::new(())
         },
     };
 
     println!("{:?}", solution);
+    let elapsed = now.elapsed();
+    println!("Elapsed: {:.2?}", elapsed);
 
     Ok(())
 }
