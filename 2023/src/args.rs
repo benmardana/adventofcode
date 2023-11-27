@@ -46,7 +46,7 @@ impl Display for Part {
 /// Advent of Code
 pub struct Args {
     #[argh(positional)]
-    pub day_to_run: u8,
+    pub day_to_run: usize,
 
     /// which part of a solution to run. possible values: [1, 2]
     #[argh(option, short = 'p')]

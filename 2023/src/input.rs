@@ -14,21 +14,27 @@ pub struct Input {
     pub raw: String,
 }
 
-fn get_cache_file_path(day: u8) -> PathBuf {
+fn get_cache_file_path(day: usize) -> PathBuf {
     INPUT_DIR_PATH.join(format!("{day}.txt"))
 }
 
-pub fn get_input(day: u8) -> Result<Input> {
+pub fn get_input(day: usize) -> Result<Input> {
     let cached_input = get_input_from_cache(day);
 
     if cached_input.is_ok() {
         return cached_input;
     }
 
-    let raw = blocking::Client::new()
-        .get(format!("https://adventofcode.com/2022/day/{day}/input"))
+    let response = blocking::Client::new()
+        .get(format!("https://adventofcode.com/2023/day/{day}/input"))
         .header("Cookie", "session=53616c7465645f5ff1a56de37498e4ebe200286024ee4812450a695b1355aef3e55306f1cc236f884a8991b0c70c0152125f83393f7bb1bbe1b72d17b3d1440d")
-        .send()?
+        .send()?;
+
+    if !response.status().is_success() {
+        return Err(anyhow!(format!("{:#?}", response.text())))
+    }
+    
+    let raw = response
         .text()?
         .trim_end()
         .to_owned();
@@ -39,7 +45,7 @@ pub fn get_input(day: u8) -> Result<Input> {
 }
 
 
-fn get_input_from_cache(day: u8) -> Result<Input> {
+fn get_input_from_cache(day: usize) -> Result<Input> {
     if !INPUT_DIR_PATH.exists() {
         return Err(anyhow!("Cache directory not found: {}/", INPUT_DIR_PATH.display()));
     }
@@ -53,7 +59,7 @@ fn get_input_from_cache(day: u8) -> Result<Input> {
     }
 }
 
-fn cache_input(day: u8, input: &str) -> Result<()> {
+fn cache_input(day: usize, input: &str) -> Result<()> {
     if !INPUT_DIR_PATH.exists() {
         create_dir(*INPUT_DIR_PATH)?;
     }
