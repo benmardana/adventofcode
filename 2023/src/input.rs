@@ -26,7 +26,7 @@ pub fn get_input(day: usize) -> Result<Input> {
     }
 
     let response = blocking::Client::new()
-        .get(format!("https://adventofcode.com/2023/day/{day}/input"))
+        .get(format!("https://adventofcode.com/2022/day/{day}/input"))
         .header("Cookie", "session=53616c7465645f5ff1a56de37498e4ebe200286024ee4812450a695b1355aef3e55306f1cc236f884a8991b0c70c0152125f83393f7bb1bbe1b72d17b3d1440d")
         .send()?;
 
