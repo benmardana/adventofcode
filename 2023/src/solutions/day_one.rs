@@ -1,3 +1,5 @@
+use regex::RegexSet;
+
 use crate::input::Input;
 
 use super::Solution;
@@ -34,6 +36,27 @@ impl Solution for DayOne {
     }
 
     fn part_two(&self, input: &Input) -> String {
-        input.raw.lines().fold(0, |acc, curr| acc).to_string()
+        let re = RegexSet::new(&[
+            r"\d",
+            r"zero",
+            r"one",
+            r"two",
+            r"three",
+            r"four",
+            r"five",
+            r"six",
+            r"seven",
+            r"eight",
+            r"nine"
+        ]).unwrap();
+        input.raw.lines().fold(0, |acc, curr| 
+            {   
+                let mut it = re.matches(curr).into_iter();
+                let left = it.next();
+                let right = it.last();
+                dbg!(left, right);
+                acc
+            }
+        ).to_string()
     }
 }
