@@ -1,4 +1,6 @@
-use regex::RegexSet;
+use std::collections::HashMap;
+
+use regex::Regex;
 
 use crate::input::Input;
 
@@ -36,27 +38,50 @@ impl Solution for DayOne {
     }
 
     fn part_two(&self, input: &Input) -> String {
-        let re = RegexSet::new(&[
-            r"\d",
-            r"zero",
-            r"one",
-            r"two",
-            r"three",
-            r"four",
-            r"five",
-            r"six",
-            r"seven",
-            r"eight",
-            r"nine"
-        ]).unwrap();
-        input.raw.lines().fold(0, |acc, curr| 
-            {   
-                let mut it = re.matches(curr).into_iter();
-                let left = it.next();
-                let right = it.last();
-                dbg!(left, right);
-                acc
-            }
-        ).to_string()
+        let re_left = Regex::new(r"\d|one|two|three|four|five|six|seven|eight|nine").unwrap();
+        let re_right = Regex::new(r"\d|eno|owt|eerht|ruof|evif|xis|neves|thgie|enin").unwrap();
+        input
+            .raw
+            .lines()
+            .fold(0, |acc, curr| {
+                let left = re_left.find(curr).unwrap().as_str();
+                let rev = curr.chars().rev().collect::<String>();
+                let right = re_right.find(&rev).unwrap().as_str();
+                let value = map(left) * 10 + map(right);
+                acc + value
+            })
+            .to_string()
     }
+}
+fn map(word: &str) -> u16 {
+    let arr = HashMap::from([
+        ("1", 1),
+        ("one", 1),
+        ("eno", 1),
+        ("2", 2),
+        ("two", 2),
+        ("owt", 2),
+        ("3", 3),
+        ("three", 3),
+        ("eerht", 3),
+        ("4", 4),
+        ("four", 4),
+        ("ruof", 4),
+        ("5", 5),
+        ("five", 5),
+        ("evif", 5),
+        ("6", 6),
+        ("six", 6),
+        ("xis", 6),
+        ("7", 7),
+        ("seven", 7),
+        ("neves", 7),
+        ("8", 8),
+        ("eight", 8),
+        ("thgie", 8),
+        ("9", 9),
+        ("nine", 9),
+        ("enin", 9),
+    ]);
+    *arr.get(word).unwrap()
 }
