@@ -53,6 +53,7 @@ impl Solution for DayOne {
             .to_string()
     }
 }
+
 fn map(word: &str) -> u16 {
     let arr = HashMap::from([
         ("1", 1),
