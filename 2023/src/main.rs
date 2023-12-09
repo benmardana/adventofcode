@@ -1,10 +1,9 @@
 mod input;
 mod solutions;
+mod args;
 
 use input::get_input;
 use solutions::get_solution;
-
-mod args;
 use args::{Args, Part};
 
 fn main() {
