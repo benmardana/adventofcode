@@ -1,4 +1,4 @@
-use std::{cmp::min, collections::HashMap};
+use std::{cmp::{min, max}, collections::HashMap};
 
 use super::Solution;
 
@@ -17,9 +17,6 @@ impl Solution for DayThree {
                         if i == 0 {
                             break 'above "".to_owned();
                         }
-                        dbg!(input.raw.lines().nth(i - 1).unwrap_or("").get(
-                            num.start().saturating_sub(1)..(min(num.end() + 1, line.len() + 1))
-                        ));
                         input
                             .raw
                             .lines()
@@ -60,7 +57,7 @@ impl Solution for DayThree {
 
     fn part_two(&self, input: &crate::input::Input) -> String {
         let num_re = regex::Regex::new(r"\d+").unwrap();
-        let symbol_re = regex::Regex::new(r"\*]").unwrap();
+        let symbol_re = regex::Regex::new(r"\*").unwrap();
         let map: HashMap<String, Vec<u64>> = HashMap::new();
         input.raw.lines().enumerate().for_each(|(i, line)| {
             let nums = num_re.find_iter(line);
@@ -70,9 +67,6 @@ impl Solution for DayThree {
                         if i == 0 {
                             break 'above "".to_owned();
                         }
-                        dbg!(input.raw.lines().nth(i - 1).unwrap_or("").get(
-                            num.start().saturating_sub(1)..(min(num.end() + 1, line.len() + 1))
-                        ));
                         input
                             .raw
                             .lines()
@@ -82,13 +76,27 @@ impl Solution for DayThree {
                             .unwrap_or("")
                             .to_string()
                     };
-                let middle = format!(
-                    "{}{}",
-                    line.get(num.start().saturating_sub(1)..num.start())
-                        .unwrap_or(""),
-                    line.get(num.end()..(min(num.end() + 1, line.len())))
-                        .unwrap_or("")
-                );
+
+                if let Some(m) = symbol_re.find(&above) {
+                    let x = max(1, num.start()) + m.start() - 1;
+                    let y = i - 1;
+                    dbg!(x,y, num.as_str().parse::<u64>().unwrap());
+                }
+
+                let front = line.get(num.start().saturating_sub(1)..num.start()).unwrap_or("");
+                if let Some(_) = symbol_re.find(front) {
+                    let x = num.start() - 1;
+                    let y = i - 1;
+                    dbg!(x,y, num.as_str().parse::<u64>().unwrap());
+                }
+
+                let back = line.get(num.end()..(min(num.end() + 1, line.len()))).unwrap_or("");
+                if let Some(_) = symbol_re.find(back) {
+                    let x = num.end() + 1;
+                    let y = i - 1;
+                    dbg!(x,y, num.as_str().parse::<u64>().unwrap());
+                }
+
                 let below = 'below: {
                     if i == input.raw.len() + 1 {
                         break 'below "".to_owned();
@@ -102,13 +110,13 @@ impl Solution for DayThree {
                         .unwrap_or("")
                         .to_string()
                 };
-                if let Some(m) = symbol_re.find(&above) {
-                    let x = m.start() + num.start();
-                    let y = i - 1;
-                    num.as_str().parse::<u64>().unwrap()
+                if let Some(m) = symbol_re.find(&below) {
+                    let x = max(1, num.start()) + m.start() - 1;
+                    let y = i + 1;
+                    dbg!(x,y, num.as_str().parse::<u64>().unwrap());
                 }
             }
         });
-        sum.to_string()
+        "1".to_string()
     }
 }
