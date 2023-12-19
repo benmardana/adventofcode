@@ -24,3 +24,7 @@ const SOLUTIONS: [&dyn Solution; 4] = [&DayOne {}, &DayTwo {}, &DayThree {}, &Da
 pub fn get_solution(day: usize) -> Option<&'static &'static dyn Solution> {
     SOLUTIONS.get(day - 1)
 }
+
+pub fn get_solutions() -> Vec<&'static dyn Solution> {
+    return SOLUTIONS.to_vec();
+}
